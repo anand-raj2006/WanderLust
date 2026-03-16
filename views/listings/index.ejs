@@ -1,0 +1,81 @@
+<% layout('layouts/boilerplate') %>
+
+    <body>
+        <div class="filters-wrap" aria-label="Listing filters">
+            <a class="filter-chip <%= !activeCategory ? 'active-filter' : '' %>" href="/listings">
+                <i class="fa-solid fa-grip"></i>
+                <span>All</span>
+            </a>
+            <a class="filter-chip <%= activeCategory === 'Trending' ? 'active-filter' : '' %>"
+                href="/listings?category=Trending">
+                <i class="fa-solid fa-fire"></i>
+                <span>Trending</span>
+            </a>
+            <a class="filter-chip <%= activeCategory === 'Rooms' ? 'active-filter' : '' %>"
+                href="/listings?category=Rooms">
+                <i class="fa-solid fa-bed"></i>
+                <span>Rooms</span>
+            </a>
+            <a class="filter-chip <%= activeCategory === 'Iconic cities' ? 'active-filter' : '' %>"
+                href="/listings?category=Iconic+cities">
+                <i class="fa-solid fa-city"></i>
+                <span>Iconic cities</span>
+            </a>
+            <a class="filter-chip <%= activeCategory === 'Mountains' ? 'active-filter' : '' %>"
+                href="/listings?category=Mountains">
+                <i class="fa-solid fa-mountain"></i>
+                <span>Mountains</span>
+            </a>
+            <a class="filter-chip <%= activeCategory === 'Castles' ? 'active-filter' : '' %>"
+                href="/listings?category=Castles">
+                <i class="fa-solid fa-chess-rook"></i>
+                <span>Castles</span>
+            </a>
+            <a class="filter-chip <%= activeCategory === 'Amazing pools' ? 'active-filter' : '' %>"
+                href="/listings?category=Amazing+pools">
+                <i class="fa-solid fa-water"></i>
+                <span>Amazing pools</span>
+            </a>
+            <a class="filter-chip <%= activeCategory === 'Camping' ? 'active-filter' : '' %>"
+                href="/listings?category=Camping">
+                <i class="fa-solid fa-campground"></i>
+                <span>Camping</span>
+            </a>
+            <a class="filter-chip <%= activeCategory === 'Farms' ? 'active-filter' : '' %>"
+                href="/listings?category=Farms">
+                <i class="fa-solid fa-tractor"></i>
+                <span>Farms</span>
+            </a>
+            <a class="filter-chip <%= activeCategory === 'Arctic' ? 'active-filter' : '' %>"
+                href="/listings?category=Arctic">
+                <i class="fa-regular fa-snowflake"></i>
+                <span>Arctic</span>
+            </a>
+        </div>
+        <div class="row row-cols-lg-4 row-cols-md-3 row-cols-sm-2 row-cols-1 g-4">
+            <% listings.forEach(listing=> { %>
+                <% const rawImageUrl=(listing.image && listing.image.url) ? listing.image.url : (typeof
+                    listing.image==='string' ? listing.image : '' ); %>
+                    <% const imageUrl=(rawImageUrl && !rawImageUrl.includes('unsplash.com/photos/')) ? rawImageUrl
+                        : 'https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=1200&q=80'
+                        ; %>
+                        <div class="col">
+                            <a style="text-decoration: none; color: inherit;" href="/listings/<%= listing._id %>">
+                                <div class="card h-100 index-card">
+                                    <img src="<%= imageUrl %>" class="card-img-top" alt="listing image">
+                                    <div class="title">
+                                        <div>
+                                            <h6 class="card-title">
+                                                <%= listing.title %>
+                                            </h6>
+                                        </div>
+                                        <div style="margin-left: auto; font-weight: bold; color: green;">
+                                            $<%= listing.price %>/night
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <% }) %>
+        </div>
+    </body>

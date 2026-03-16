@@ -1,0 +1,107 @@
+<% layout('layouts/boilerplate') %>
+
+    <div class="row justify-content-center mt-4 mb-5">
+        <div class="col-12 col-md-10 col-lg-8">
+            <div class="card shadow-sm">
+                <div class="card-body p-4">
+                    <h3 class="mb-4">Edit Listing</h3>
+
+                    <form action="/listings/<%= listing._id %>?_method=PUT" method="POST" novalidate
+                        class="needs-validation" enctype="multipart/form-data">
+                        <div class="mb-3">
+                            <label for="title" class="form-label">Title</label>
+                            <input id="title" type="text" name="listing[title]" class="form-control"
+                                value="<%= listing.title %>" required>
+                            <div class="valid-feedback">
+                                Looks good!
+                            </div>
+                            <div class="invalid-feedback">
+                                Please enter a title!
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="description" class="form-label">Description</label>
+                            <textarea id="description" name="listing[description]" class="form-control" rows="4"
+                                required><%= listing.description %></textarea>
+                            <div class="invalid-feedback">
+                                Please enter a short description!
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <% const rawImageUrl=(listing.image && listing.image.url) ? listing.image.url : (typeof
+                                listing.image==='string' ? listing.image : '' ); %>
+                                <% const currentImageUrl=(rawImageUrl && !rawImageUrl.includes('unsplash.com/photos/'))
+                                    ? rawImageUrl
+                                    : 'https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=1200&q=80'
+                                    ; %>
+                                    <div class="row g-3 align-items-start">
+                                        <div class="col-12 col-md-5">
+                                            <p class="form-label mb-2">Current Image Preview</p>
+                                            <img src="<%= currentImageUrl %>" alt="Current listing image"
+                                                class="rounded border w-100"
+                                                style="aspect-ratio: 1 / 1; object-fit: cover;">
+                                        </div>
+                                        <div class="col-12 col-md-7">
+                                            <label for="file" class="form-label">Upload New Image</label>
+                                            <input id="imageFile" type="file" name="listing[image]" class="form-control"
+                                                accept="image/*">
+                                            <small class="text-muted">Leave empty to keep current image.</small>
+                                            <div class="valid-feedback">
+                                                Attractive Image!
+                                            </div>
+                                            <div class="invalid-feedback">
+                                                Please insert a valid image URL!
+                                            </div>
+                                        </div>
+                                    </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="price" class="form-label">Price</label>
+                                <input id="price" type="number" name="listing[price]" class="form-control"
+                                    value="<%= listing.price %>" min="0" required>
+                                <div class="invalid-feedback">
+                                    Please enter a valid price!
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="country" class="form-label">Country</label>
+                                <input id="country" type="text" name="listing[country]" class="form-control"
+                                    value="<%= listing.country %>" required>
+
+                                <div class="invalid-feedback">
+                                    Please enter the country!
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="location" class="form-label">Location</label>
+                            <input id="location" type="text" name="listing[location]" class="form-control"
+                                value="<%= listing.location %>" required>
+
+                            <div class="invalid-feedback">
+                                Please enter the location!
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="category" class="form-label">Category</label>
+                            <select id="category" name="listing[category]" class="form-select">
+                                <% ['Trending','Rooms','Iconic cities','Mountains','Castles','Amazing
+                                    pools','Camping','Farms','Arctic'].forEach(cat=> { %>
+                                    <option value="<%= cat %>" <%=listing.category===cat ? 'selected' : '' %>><%= cat %>
+                                    </option>
+                                    <% }) %>
+                            </select>
+                        </div>
+
+                        <button type="submit" class="btn btn-dark">Update Listing</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>

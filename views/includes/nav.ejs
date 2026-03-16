@@ -1,0 +1,47 @@
+<% const CATEGORIES = ['Trending','Rooms','Iconic cities','Mountains','Castles','Amazing pools','Camping','Farms','Arctic']; %>
+<nav id="mainNavbar" data-navbar-theme="light" class="navbar navbar-expand-md bg-body-tertiary border-bottom border-3 border-dark sticky-top">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/listings"><i class="fa-regular fa-compass"></i> WanderLust</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+      aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+      <form class="navbar-search" action="/listings" method="GET" autocomplete="off" role="search">
+        <i class="fa-solid fa-magnifying-glass search-icon"></i>
+        <input type="text" name="search" class="search-input" placeholder="Search destinations..."
+          value="<%= typeof searchQuery !== 'undefined' ? searchQuery : '' %>">
+        <span class="search-divider"></span>
+        <select name="country" class="search-select">
+          <option value="">Anywhere</option>
+          <% allCountries.forEach(function(c) { %>
+            <option value="<%= c %>" <%= (typeof selectedCountry !== 'undefined' && selectedCountry === c) ? 'selected' : '' %>><%= c %></option>
+          <% }) %>
+        </select>
+        <span class="search-divider"></span>
+        <select name="category" class="search-select">
+          <option value="">Any type</option>
+          <% CATEGORIES.forEach(function(cat) { %>
+            <option value="<%= cat %>"><%= cat %></option>
+          <% }) %>
+        </select>
+        <button type="submit" class="search-btn" aria-label="Search">
+          <i class="fa-solid fa-magnifying-glass"></i> Search
+        </button>
+      </form>
+
+      <div class="navbar-nav ms-auto gap-2 nav-right-links">
+        <button id="navbarThemeToggle" class="nav-theme-toggle" type="button" aria-label="Toggle navbar theme" aria-pressed="false">
+          <i class="fa-regular fa-moon"></i>
+        </button>
+        <a class="nav-link nav-soft-link host-link" href="/listings/new">New Listing</a>
+        <% if (!currentUser) { %>
+          <a class="nav-link auth-btn signup-btn" href="/signup">Sign up</a>
+          <a class="nav-link auth-btn login-btn" href="/login">Log in</a>
+        <% } else { %>
+          <a class="nav-link" href="/logout">Log out</a>
+        <% } %>
+      </div>
+    </div>
+  </div>
+</nav>
