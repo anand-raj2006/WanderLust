@@ -36,13 +36,18 @@
                                     </p>
                                     <p class="mb-3"><strong>Price:</strong> $<%= listing.price %>/night</p>
 
-                                    <div class="mt-auto d-flex gap-2">
-                                        <a href="/listings/<%= listing._id %>/edit" class="btn btn-dark btn-sm">Edit</a>
-                                        <form action="/listings/<%= listing._id %>?_method=DELETE" method="POST"
-                                            class="m-0">
-                                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-                                        </form>
-                                    </div>
+                                    <% const isListingOwner=currentUser && listing.owner &&
+                                        String(currentUser._id)===String(listing.owner._id || listing.owner); %>
+                                        <% if (isListingOwner) { %>
+                                            <div class="mt-auto d-flex gap-2">
+                                                <a href="/listings/<%= listing._id %>/edit"
+                                                    class="btn btn-dark btn-sm">Edit</a>
+                                                <form action="/listings/<%= listing._id %>?_method=DELETE" method="POST"
+                                                    class="m-0">
+                                                    <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                                </form>
+                                            </div>
+                                            <% } %>
                                 </div>
                             </div>
                 </div>
@@ -97,11 +102,15 @@
                                             <h6 class="review-comment">
                                                 <%= review.comment %>
                                             </h6>
-                                            <form
-                                                action="/listings/<%= listing._id %>/reviews/<%= review._id %>?_method=DELETE"
-                                                method="POST">
-                                                <button type="submit" class="btn-sm">Delete Review</button>
-                                            </form>
+                                            <% const canDeleteReview=currentUser && review.author &&
+                                                String(currentUser._id)===String(review.author._id || review.author); %>
+                                                <% if (canDeleteReview) { %>
+                                                    <form
+                                                        action="/listings/<%= listing._id %>/reviews/<%= review._id %>?_method=DELETE"
+                                                        method="POST">
+                                                        <button type="submit" class="btn-sm">Delete Review</button>
+                                                    </form>
+                                                    <% } %>
                                         </div>
                                     </div>
                                 </div>
