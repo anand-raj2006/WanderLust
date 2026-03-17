@@ -34,7 +34,7 @@
                                         <%= listing.owner && listing.owner.username ? listing.owner.username : 'Unknown'
                                             %>
                                     </p>
-                                    <p class="mb-3"><strong>Price:</strong> Ruppe <%= listing.price %>/night</p>
+                                    <p class="mb-3"><strong>Price:</strong> ₹<%= listing.price %>/night</p>
 
                                     <% const isListingOwner=currentUser && listing.owner &&
                                         String(currentUser._id)===String(listing.owner._id || listing.owner); %>
